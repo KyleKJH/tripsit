@@ -1,0 +1,29 @@
+type Mutation {
+	createSession(email: CreateSessionInput!, password: String!): CreateSessionResponse!
+	register(input: RegisterInput!): Boolean
+}
+
+input RegisterInput {
+	email: EmailAddress!
+	password: String! @constraint(minLength: 6)
+	nick: String
+}
+
+input CreateSessionInput {
+	email: EmailAddress!
+	password: String! @constraint(minLength: 6)
+	expires: DateTime
+}
+
+type CreateSessionResponse {
+	sessionId: String!
+	user: User!
+}
+
+type User {
+	id: ID!
+	email: EmailAddress!
+	nick: String
+	createdAt: DateTime!
+	updatedAt: DateTime!
+}

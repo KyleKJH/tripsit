@@ -1,0 +1,42 @@
+type Query {
+	getDrugById(drugId: ID!): Drug!
+}
+
+type Mutation {
+	createDrug(drug: CreateDrugInput!): Drug!
+	updateDrug(drugId: ID!, updates: UpdateDrugInput!): Drug!
+	deleteDrug(drugId: ID!): Boolean
+}
+
+input CreateDrugInput {
+	name: String!
+	summary: String
+	effects: String
+	detection: String
+	avoid: String
+	pubchemCid: String
+	referencesAndNotes: String
+}
+
+input UpdateDrugInput {
+	name: String
+	summary: String
+	effects: String
+	detection: String
+	avoid: String
+	pubchemCid: String
+	referencesAndNotes: String
+}
+
+type Drug {
+	id: ID!
+	name: String!
+	summary: String
+	effects: String
+	detection: String
+	avoid: String
+	pubchemCid: String
+	referencesAndNotes: String
+	createdAt: DateTime!
+	updatedAt: DateTime!
+}

@@ -4,8 +4,9 @@
   "license": "BSD-3-Clause",
   "scripts": {
     "start": "scripts/start.sh",
+    "dev": "lerna run dev",
     "test": "scripts/test.sh",
-    "postinstall": "scripts/setup.sh",
+    "postinstall": "lerna bootstrap",
     "db": "scripts/db.sh",
     "clean": "scripts/clean.sh",
     "eslint:fix": "eslint --fix **/*.js"

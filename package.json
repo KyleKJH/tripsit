@@ -3,7 +3,8 @@
   "private": true,
   "license": "BSD-3-Clause",
   "scripts": {
-    "db": "scripts/db.sh"
+    "db": "scripts/db.sh",
+    "clean": "scripts/clean.sh"
   },
   "devDependencies": {
     "dotenv": "^8.2.0",

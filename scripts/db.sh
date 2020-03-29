@@ -40,7 +40,6 @@ case "$1" in
 esac
 
 # Ensure DB is running
-db_container_id=$(docker ps -f name=tripsit_db)
 if [[ ! -z $(docker ps -f name=tripsit_db) ]]; then
     docker-compose up -d db
     sleep 1

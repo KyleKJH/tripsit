@@ -1,11 +1,20 @@
 {
-	"name": "@tripsit/root",
-	"private": true,
-	"license": "BSD-3-Clause",
+  "name": "@tripsit/root",
+  "private": true,
+  "license": "BSD-3-Clause",
+  "scripts": {
+    "db-migration-latest": "eval $(egrep -v '^#' .env | xargs) knex migrate:latest",
+    "db-migration-create": "eval $(egrep -v '^#' .env | xargs) knex migrate:make --"
+  },
   "devDependencies": {
+    "dotenv": "^8.2.0",
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.1.0",
     "eslint-plugin-import": "^2.20.2",
-    "lerna": "^3.20.2"
+    "fake-tag": "^2.0.0",
+    "knex": "^0.20.13",
+    "knex-stringcase": "^1.4.1",
+    "lerna": "^3.20.2",
+    "pg": "^7.18.2"
   }
 }

@@ -1,8 +1,9 @@
 #!/bin/sh
 
-if [[ ! -d "node_modules" ]]; then
-    echo "Removing generated files..."
+if [[ -d "node_modules" ]]; then
+    echo "\nRemoving generated files..."
     rm -rf node_modules
+    npm i
 fi
 
 container_ids=$(docker ps -qf name=tripsit)

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 
 CONTINER_COUNT=1;
 

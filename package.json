@@ -3,6 +3,7 @@
   "private": true,
   "license": "BSD-3-Clause",
   "scripts": {
+    "start": "scripts/start.sh",
     "db": "scripts/db.sh",
     "clean": "scripts/clean.sh"
   },

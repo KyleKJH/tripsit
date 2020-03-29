@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 
 if [[ -d "node_modules" ]]; then
     echo "\nRemoving generated files..."

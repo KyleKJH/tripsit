@@ -1,0 +1,19 @@
+{
+  "name": "@tripsit/api-graphql",
+  "version": "0.1.0",
+  "description": "Public GraphQL HTTP API",
+  "author": "SevenCatsHere <snowcolton@hotmail.com>",
+  "homepage": "https://github.com/tripsit-me/tripsit#readme",
+  "license": "BSD-3-Clause",
+  "main": "dist/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tripsit-me/tripsit.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/tripsit-me/tripsit/issues"
+  }
+}

@@ -6,8 +6,8 @@ const knexConfig = require('../../../knexfile');
 const { schema, createDataSources } = require('../../../src/components');
 
 module.exports = function createTestServer() {
-	return new ApolloServer({
-		schema,
-		dataSources: () => createDataSources(knex(knexConfig)),
-	});
+  return new ApolloServer({
+    schema,
+    dataSources: () => createDataSources(knex(knexConfig)),
+  });
 };

@@ -9,7 +9,7 @@ const { createTestServer, uuidRegex } = require('./utils');
 
 let db;
 beforeAll(() => {
-	db = knex(knexConfig);
+  db = knex(knexConfig);
 });
 
 beforeEach(async () => db.raw(sql`TRUNCATE TABLE users, sessions CASCADE;`));
@@ -17,180 +17,180 @@ beforeEach(async () => db.raw(sql`TRUNCATE TABLE users, sessions CASCADE;`));
 afterAll(async () => db.destroy());
 
 describe('Mutation', () => {
-	describe('register', () => {
-		test('Registers on valid input', async () => {
-			const { mutate } = createTestClient(createTestServer());
+  describe('register', () => {
+    test('Registers on valid input', async () => {
+      const { mutate } = createTestClient(createTestServer());
 
-			const { errors, data } = await mutate({
-				mutation: gql`
-					mutation Register($input: RegisterInput!) {
-						register(input: $input)
-					}
-				`,
-				variables: {
-					input: {
-						email: 'test@example.com',
-						password: 'P@ssw0rd',
-						nick: 'SevenCats',
-					},
-				},
-			});
-			expect(errors).toBeUndefined();
-			expect(data).toEqual({ register: null });
+      const { errors, data } = await mutate({
+        mutation: gql`
+          mutation Register($input: RegisterInput!) {
+            register(input: $input)
+          }
+        `,
+        variables: {
+          input: {
+            email: 'test@example.com',
+            password: 'P@ssw0rd',
+            nick: 'SevenCats',
+          },
+        },
+      });
+      expect(errors).toBeUndefined();
+      expect(data).toEqual({ register: null });
 
-			const {
-				id,
-				passwordHash,
-				createdAt,
-				updatedAt,
-				...record
-			} = await db('users')
-				.where('nick', '=', 'SevenCats')
-				.first();
-			expect(id).toMatch(uuidRegex);
-			expect(passwordHash).toBeDefined();
-			expect(createdAt).toBeInstanceOf(Date);
-			expect(updatedAt).toBeInstanceOf(Date);
-			expect(record).toEqual({
-				email: 'test@example.com',
-				nick: 'SevenCats',
-			});
-		});
-	});
+      const {
+        id,
+        passwordHash,
+        createdAt,
+        updatedAt,
+        ...record
+      } = await db('users')
+        .where('nick', '=', 'SevenCats')
+        .first();
+      expect(id).toMatch(uuidRegex);
+      expect(passwordHash).toBeDefined();
+      expect(createdAt).toBeInstanceOf(Date);
+      expect(updatedAt).toBeInstanceOf(Date);
+      expect(record).toEqual({
+        email: 'test@example.com',
+        nick: 'SevenCats',
+      });
+    });
+  });
 
-	test('Must use a valid email address', async () => {
-		const { mutate } = createTestClient(createTestServer());
+  test('Must use a valid email address', async () => {
+    const { mutate } = createTestClient(createTestServer());
 
-		const { errors, data } = await mutate({
-			mutation: gql`
-				mutation Regiter($input: RegisterInput!) {
-					register(input: $input)
-				}
-			`,
-			variables: {
-				input: {
-					email: 'example.com',
-					password: 'P@ssw0rd',
-					nick: 'SevenCats',
-				},
-			},
-		});
+    const { errors, data } = await mutate({
+      mutation: gql`
+        mutation Regiter($input: RegisterInput!) {
+          register(input: $input)
+        }
+      `,
+      variables: {
+        input: {
+          email: 'example.com',
+          password: 'P@ssw0rd',
+          nick: 'SevenCats',
+        },
+      },
+    });
 
-		expect(data).toBeUndefined();
-		expect(errors).toHaveLength(1);
-		expect(errors[0].message).toContain('Value is not a valid email address');
+    expect(data).toBeUndefined();
+    expect(errors).toHaveLength(1);
+    expect(errors[0].message).toContain('Value is not a valid email address');
 
-		const record = await db('users')
-			.where('nick', '=', 'SevenCats')
-			.first();
-		expect(record).toBeUndefined();
-	});
+    const record = await db('users')
+      .where('nick', '=', 'SevenCats')
+      .first();
+    expect(record).toBeUndefined();
+  });
 
-	test('Must use a password of at least 6 characters in length', async () => {
-		const { mutate } = createTestClient(createTestServer());
+  test('Must use a password of at least 6 characters in length', async () => {
+    const { mutate } = createTestClient(createTestServer());
 
-		const { errors, data } = await mutate({
-			mutation: gql`
-				mutation Regiter($input: RegisterInput!) {
-					register(input: $input)
-				}
-			`,
-			variables: {
-				input: {
-					email: 'test@example.com',
-					password: 'boo',
-					nick: 'SevenCats',
-				},
-			},
-		});
+    const { errors, data } = await mutate({
+      mutation: gql`
+        mutation Regiter($input: RegisterInput!) {
+          register(input: $input)
+        }
+      `,
+      variables: {
+        input: {
+          email: 'test@example.com',
+          password: 'boo',
+          nick: 'SevenCats',
+        },
+      },
+    });
 
-		expect(data).toBeUndefined();
-		expect(errors).toHaveLength(1);
-		expect(errors[0].message).toContain('Must be at least 6 characters in length');
+    expect(data).toBeUndefined();
+    expect(errors).toHaveLength(1);
+    expect(errors[0].message).toContain('Must be at least 6 characters in length');
 
-		const record = await db('users')
-			.where('nick', '=', 'SevenCats')
-			.first();
-		expect(record).toBeUndefined();
-	});
+    const record = await db('users')
+      .where('nick', '=', 'SevenCats')
+      .first();
+    expect(record).toBeUndefined();
+  });
 
-	test('Must use a unique email', async () => {
-		const { mutate } = createTestClient(createTestServer());
+  test('Must use a unique email', async () => {
+    const { mutate } = createTestClient(createTestServer());
 
-		// Register user
-		await mutate({
-			mutation: gql`
-				mutation Register($input: RegisterInput!) {
-					register(input: $input)
-				}
-			`,
-			variables: {
-				input: {
-					email: 'test@example.com',
-					password: 'P@ssw0rd',
-					nick: 'SevenCats',
-				},
-			},
-		});
+    // Register user
+    await mutate({
+      mutation: gql`
+        mutation Register($input: RegisterInput!) {
+          register(input: $input)
+        }
+      `,
+      variables: {
+        input: {
+          email: 'test@example.com',
+          password: 'P@ssw0rd',
+          nick: 'SevenCats',
+        },
+      },
+    });
 
-		// Try to register same user
-		const { errors, data } = await mutate({
-			mutation: gql`
-				mutation Regiter($input: RegisterInput!) {
-					register(input: $input)
-				}
-			`,
-			variables: {
-				input: {
-					email: 'test@example.com',
-					password: 'P@ssw0rd',
-					nick: 'SevenCats',
-				},
-			},
-		});
+    // Try to register same user
+    const { errors, data } = await mutate({
+      mutation: gql`
+        mutation Regiter($input: RegisterInput!) {
+          register(input: $input)
+        }
+      `,
+      variables: {
+        input: {
+          email: 'test@example.com',
+          password: 'P@ssw0rd',
+          nick: 'SevenCats',
+        },
+      },
+    });
 
-		expect(data).toEqual({ register: null });
-		expect(errors).toHaveLength(1);
-		expect(errors[0].message).toBe('Unique constraint error');
-	});
+    expect(data).toEqual({ register: null });
+    expect(errors).toHaveLength(1);
+    expect(errors[0].message).toBe('Unique constraint error');
+  });
 
-	test('Must use a unique nick', async () => {
-		const { mutate } = createTestClient(createTestServer());
+  test('Must use a unique nick', async () => {
+    const { mutate } = createTestClient(createTestServer());
 
-		// Register user
-		await mutate({
-			mutation: gql`
-				mutation Register($input: RegisterInput!) {
-					register(input: $input)
-				}
-			`,
-			variables: {
-				input: {
-					email: 'test@example.com',
-					password: 'P@ssw0rd',
-					nick: 'SevenCats',
-				},
-			},
-		});
+    // Register user
+    await mutate({
+      mutation: gql`
+        mutation Register($input: RegisterInput!) {
+          register(input: $input)
+        }
+      `,
+      variables: {
+        input: {
+          email: 'test@example.com',
+          password: 'P@ssw0rd',
+          nick: 'SevenCats',
+        },
+      },
+    });
 
-		// Try to register same user
-		const { errors, data } = await mutate({
-			mutation: gql`
-				mutation Regiter($input: RegisterInput!) {
-					register(input: $input)
-				}
-			`,
-			variables: {
-				input: {
-					email: 'test2@example.com',
-					password: 'P@ssw0rd',
-					nick: 'SevenCats',
-				},
-			},
-		});
+    // Try to register same user
+    const { errors, data } = await mutate({
+      mutation: gql`
+        mutation Regiter($input: RegisterInput!) {
+          register(input: $input)
+        }
+      `,
+      variables: {
+        input: {
+          email: 'test2@example.com',
+          password: 'P@ssw0rd',
+          nick: 'SevenCats',
+        },
+      },
+    });
 
-		expect(data).toEqual({ register: null });
-		expect(errors).toHaveLength(1);
-		expect(errors[0].message).toBe('Unique constraint error');
-	});
+    expect(data).toEqual({ register: null });
+    expect(errors).toHaveLength(1);
+    expect(errors[0].message).toBe('Unique constraint error');
+  });
 });

@@ -1,4 +1,4 @@
 #!/bin/sh -e
 
 docker-compose up -d
-npx lerna run start
+npx lerna run test

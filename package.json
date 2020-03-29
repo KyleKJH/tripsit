@@ -4,14 +4,18 @@
   "license": "BSD-3-Clause",
   "scripts": {
     "start": "scripts/start.sh",
+    "test": "scripts/test.sh",
+    "postinstall": "scripts/setup.sh",
     "db": "scripts/db.sh",
-    "clean": "scripts/clean.sh"
+    "clean": "scripts/clean.sh",
+    "eslint:fix": "eslint --fix **/*.js"
   },
   "devDependencies": {
     "dotenv": "^8.2.0",
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.1.0",
     "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-jest": "^23.8.2",
     "fake-tag": "^2.0.0",
     "knex": "^0.20.13",
     "knex-stringcase": "^1.4.1",

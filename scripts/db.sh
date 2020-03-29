@@ -1,7 +1,5 @@
 #!/bin/sh -e
 
-echo $1
-
 USAGE_ERROR="
 Usage:\n
 \tdb.sh latest\n

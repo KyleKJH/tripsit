@@ -14,6 +14,11 @@ module.exports = {
   },
   overrides: [
     {
+      files: ['**/*.spec.js', '**/__mocks__/*.js'],
+      env: { jest: true },
+      plugins: ['jest'],
+    },
+    {
       files: ['migrations/*.js', 'knexfile.js', 'migration-utils.js'],
       rules: {
         'import/no-extraneous-dependencies': 0,

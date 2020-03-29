@@ -11,5 +11,13 @@ module.exports = {
 		'func-names': 0,
 		'arrow-parens': [2, 'as-needed', { requireForBlockBody: true }],
 		'implicit-arrow-linebreak': 0,
-	},
+  },
+  overrides: [
+    {
+      files: ['migrations/*.js', 'knexfile.js', 'migration-utils.js'],
+      rules: {
+        'import/no-extraneous-dependencies': 0,
+      },
+    },
+  ],
 };

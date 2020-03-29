@@ -4,9 +4,9 @@ const sql = require('fake-tag');
 const { column } = require('../migration-utils');
 
 exports.up = async function (knex) {
-	await knex.raw(sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp";`);
+  await knex.raw(sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp";`);
 
-	return Promise.all([
+  return Promise.all([
     knex.schema.createTable('drugs', (table) => {
       column.pk(table, knex);
       table.text('name').notNullable().unique();
@@ -41,14 +41,14 @@ exports.up = async function (knex) {
         table.datetime('expires');
         table.timestamps(true, true);
       })),
-    ]);
+  ]);
 };
 
 exports.down = async function (knex) {
   await Promise.all([
     knex.schema.dropTable('drugs'),
     knex.schema.dropTable('sessions')
-      .then(() => knex.schema.dropTable('users'))
+      .then(() => knex.schema.dropTable('users')),
   ]);
-	return knex.raw(sql`DROP EXTENSION IF EXISTS "uuid-ossp";`);
+  return knex.raw(sql`DROP EXTENSION IF EXISTS "uuid-ossp";`);
 };

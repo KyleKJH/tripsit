@@ -11,7 +11,11 @@
     "url": "git+https://github.com/tripsit-me/tripsit.git"
   },
   "scripts": {
-    "test": "echo \"Error: run tests from root\" && exit 1"
+    "start": "NODE_ENV=production npm run babel && node dist/index.js",
+    "dev": "NODE_ENV=development nodemon --exec babel-node --inspect src/index.js",
+    "test": "echo \"Error: run tests from root\" && exit 1",
+    "clean": "rm -rf node_modules dist",
+    "babel": "babel src -d dist"
   },
   "bugs": {
     "url": "https://github.com/tripsit-me/tripsit/issues"

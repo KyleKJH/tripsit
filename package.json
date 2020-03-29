@@ -3,8 +3,7 @@
   "private": true,
   "license": "BSD-3-Clause",
   "scripts": {
-    "db-migration-latest": "eval $(egrep -v '^#' .env | xargs) knex migrate:latest",
-    "db-migration-create": "eval $(egrep -v '^#' .env | xargs) knex migrate:make --"
+    "db": "scripts/db.sh"
   },
   "devDependencies": {
     "dotenv": "^8.2.0",

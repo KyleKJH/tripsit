@@ -11,13 +11,13 @@ beforeAll(() => {
   db = knex(knexConfig);
 });
 
-afterEach(async () => db('drug').truncate());
+afterEach(async () => db('drugs').truncate());
 
 afterAll(async () => db.destroy());
 
 describe('Query', () => {
   test('getDrugById', async () => {
-    const drugId = await db('drug')
+    const drugId = await db('drugs')
       .insert({
         name: 'Rickazalam',
         summary: 'Rowdy',
@@ -111,7 +111,7 @@ describe('Mutations', () => {
       referencesAndNotes: null,
     });
 
-    const record = await db('drug')
+    const record = await db('drugs')
       .where('id', id)
       .first()
       .then(({ deleted, ...xs }) => xs);
@@ -130,7 +130,7 @@ describe('Mutations', () => {
   });
 
   test('updateDrug', async () => {
-    const record = await db('drug')
+    const record = await db('drugs')
       .insert({
         name: 'A-Cheeseburger',
         summary: 'Delcicious grease',
@@ -171,7 +171,7 @@ describe('Mutations', () => {
     expect(effects).toBe('Bad times');
     expect(new Date(updatedAt)).toEqual(record.updatedAt); // TODO
 
-    const updatedRecord = await db('drug')
+    const updatedRecord = await db('drugs')
       .select('detection', 'effects')
       .where('id', record.id)
       .first();
@@ -182,12 +182,12 @@ describe('Mutations', () => {
   });
 
   test('deleteDrug', async () => {
-    const drugId = await db('drug')
+    const drugId = await db('drugs')
       .insert({ name: 'HEXTRIPPLOEXEN' })
       .returning('id')
       .then(([id]) => id);
 
-    const deleted = await db('drug')
+    const deleted = await db('drugs')
       .select('deleted')
       .where('id', drugId)
       .first()
@@ -206,7 +206,7 @@ describe('Mutations', () => {
       .then(res => res.data.deleteDrug);
     expect(payload).toBeNull();
 
-    const updatedDeleted = await db('drug')
+    const updatedDeleted = await db('drugs')
       .select('deleted')
       .where('id', drugId)
       .first()

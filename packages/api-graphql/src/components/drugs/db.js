@@ -3,18 +3,18 @@
 module.exports = function createDrugDatabaseDataSource(db) {
   return {
     getById(id) {
-      return db('drug').where('id', id).first();
+      return db('drugs').where('id', id).first();
     },
 
     async create(drug) {
-      return db('drug')
+      return db('drugs')
         .insert(drug)
         .returning('*')
         .then(([createdDrug]) => createdDrug);
     },
 
     async updateById(id, updates) {
-      return db('drug')
+      return db('drugs')
         .update(updates)
         .where('id', id)
         .returning('*')

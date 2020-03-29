@@ -31,7 +31,6 @@ describe('Mutation', () => {
           input: {
             email: 'test@example.com',
             password: 'P@ssw0rd',
-            nick: 'SevenCats',
           },
         },
       });
@@ -45,16 +44,13 @@ describe('Mutation', () => {
         updatedAt,
         ...record
       } = await db('users')
-        .where('nick', '=', 'SevenCats')
+        .where('email', '=', 'test@example.com')
         .first();
       expect(id).toMatch(uuidRegex);
       expect(passwordHash).toBeDefined();
       expect(createdAt).toBeInstanceOf(Date);
       expect(updatedAt).toBeInstanceOf(Date);
-      expect(record).toEqual({
-        email: 'test@example.com',
-        nick: 'SevenCats',
-      });
+      expect(record).toEqual({ email: 'test@example.com' });
     });
   });
 
@@ -71,7 +67,6 @@ describe('Mutation', () => {
         input: {
           email: 'example.com',
           password: 'P@ssw0rd',
-          nick: 'SevenCats',
         },
       },
     });
@@ -81,7 +76,7 @@ describe('Mutation', () => {
     expect(errors[0].message).toContain('Value is not a valid email address');
 
     const record = await db('users')
-      .where('nick', '=', 'SevenCats')
+      .where('email', '=', 'test@example.com')
       .first();
     expect(record).toBeUndefined();
   });
@@ -99,7 +94,6 @@ describe('Mutation', () => {
         input: {
           email: 'test@example.com',
           password: 'boo',
-          nick: 'SevenCats',
         },
       },
     });
@@ -109,7 +103,7 @@ describe('Mutation', () => {
     expect(errors[0].message).toContain('Must be at least 6 characters in length');
 
     const record = await db('users')
-      .where('nick', '=', 'SevenCats')
+      .where('email', '=', 'test@example.com')
       .first();
     expect(record).toBeUndefined();
   });
@@ -128,7 +122,6 @@ describe('Mutation', () => {
         input: {
           email: 'test@example.com',
           password: 'P@ssw0rd',
-          nick: 'SevenCats',
         },
       },
     });
@@ -144,47 +137,6 @@ describe('Mutation', () => {
         input: {
           email: 'test@example.com',
           password: 'P@ssw0rd',
-          nick: 'SevenCats',
-        },
-      },
-    });
-
-    expect(data).toEqual({ register: null });
-    expect(errors).toHaveLength(1);
-    expect(errors[0].message).toBe('Unique constraint error');
-  });
-
-  test('Must use a unique nick', async () => {
-    const { mutate } = createTestClient(createTestServer());
-
-    // Register user
-    await mutate({
-      mutation: gql`
-        mutation Register($input: RegisterInput!) {
-          register(input: $input)
-        }
-      `,
-      variables: {
-        input: {
-          email: 'test@example.com',
-          password: 'P@ssw0rd',
-          nick: 'SevenCats',
-        },
-      },
-    });
-
-    // Try to register same user
-    const { errors, data } = await mutate({
-      mutation: gql`
-        mutation Regiter($input: RegisterInput!) {
-          register(input: $input)
-        }
-      `,
-      variables: {
-        input: {
-          email: 'test2@example.com',
-          password: 'P@ssw0rd',
-          nick: 'SevenCats',
         },
       },
     });

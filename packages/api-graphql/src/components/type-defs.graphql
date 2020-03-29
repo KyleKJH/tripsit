@@ -1,5 +1,5 @@
-# import Mutation.* from "./user/type-defs.graphql"
-# import Query.*, Mutation.* from "./drug/type-defs.graphql"
+# import Mutation.* from "./users/type-defs.graphql"
+# import Query.*, Mutation.* from "./drugs/type-defs.graphql"
 
 scalar DateTime
 scalar EmailAddress

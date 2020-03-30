@@ -6,7 +6,7 @@
     "start": "scripts/start.sh",
     "dev": "lerna run dev",
     "test": "scripts/test.sh",
-    "postinstall": "lerna bootstrap",
+    "postinstall": "scripts/setup.sh",
     "db": "scripts/db.sh",
     "clean": "scripts/clean.sh",
     "eslint:fix": "eslint --fix **/*.js"

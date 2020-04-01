@@ -11,8 +11,8 @@
     "url": "git+https://github.com/tripsit-me/tripsit.git"
   },
   "scripts": {
-    "start": "NODE_ENV=production npm run babel && node dist/index.js",
-    "dev": "NODE_ENV=development nodemon --exec babel-node --inspect src/index.js",
+    "start": "NODE_ENV=production npm run babel && node index.js",
+    "dev": "NODE_ENV=development nodemon --exec babel-node --inspect index.js",
     "test": "echo \"Error: run tests from root\" && exit 0",
     "clean": "rm -rf node_modules dist",
     "babel": "babel src -d dist"

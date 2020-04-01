@@ -10,6 +10,17 @@ services:
         volumes:
             - db_data:/var/lib/postgresql/data
             - db_data:/docker-entrypoint-initdb.d
+    api_graphql:
+        build: ./packages/api-graphql
+        command: sh -c "npm i && npm run dev"
+        restart: always
+        depends_on:
+            - db
+        ports:
+            - 3000:3000
+        volumes:
+            - ./packages/api-graphql:/opt/api-graphql
+            - /opt/api-graphql/node_modules
 volumes:
     db_data:
         name: tripsit_db

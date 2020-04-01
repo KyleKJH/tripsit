@@ -9,6 +9,7 @@
     "postinstall": "scripts/setup.sh",
     "db": "scripts/db.sh",
     "clean": "scripts/clean.sh",
+    "update-containers": "scripts/update-containers.sh",
     "eslint:fix": "eslint --fix **/*.js"
   },
   "devDependencies": {
